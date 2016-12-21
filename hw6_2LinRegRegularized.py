@@ -9,7 +9,7 @@ import random
 import numpy as np 
 
 
-random.seed(8080)
+#random.seed(8080)
 
 def read_dta(fname):
    data = [] 
@@ -92,15 +92,12 @@ def linear_reg(transf_data, labels):
     return Xdg*Y.T
   
 #(X.T*X+lambda*E).I*X.T*Y
-def linear_reg_w_weight_decay(transf_data, labels, lambda_coef): 
-    print lambda_coef
-    X = np.matrix(transf_data)
+def linear_reg_w_weight_decay(datapoints, labels, lambda_coef):
+    #print lambda_coef
+    X = np.matrix(datapoints)
     Y = np.matrix(labels)
     Xsq = X.T*X
     I = np.identity(Xsq.shape[0])
-    #E = np.ones_like(Xsq)        
-    #print lambda_coef*E
-    #print type(lambda_coef*E)
     #print "==========================================="
     XsqReg = (Xsq+lambda_coef*I)     
     #print XsqReg
@@ -116,11 +113,11 @@ def linear_reg_w_weight_decay(transf_data, labels, lambda_coef):
     return Xdg*Y.T
 
 
-def estimate_err(w, dataset, labels): 
+def estimate_err(w, datapoints, labels):
     err = 0 
-    N = len(dataset)
-    for i in range(len(dataset)):
-        datapoint = dataset[i]
+    N = len(datapoints)
+    for i in range(len(datapoints)):
+        datapoint = datapoints[i]
         y = labels[i]
         if y*scalar_product(w, datapoint) <=0: 
             err+=1
@@ -167,6 +164,8 @@ def experiment():
 #print "lambda = ", lambda_coef  
 
 #print ghost_experiment()
+
+'''
 errs = []
 for k in [2, 1, 0, -1, -2]: 
    print "k=", k 
@@ -177,3 +176,4 @@ for k in [2, 1, 0, -1, -2]:
    errs.append(err_out)
 print errs   
 print min(errs)
+'''
